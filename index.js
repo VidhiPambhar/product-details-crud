@@ -4,10 +4,12 @@ const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const sequelize = require("./db");
-
+const cors = require('cors')
 const app = express();
 const port = 3000;
-
+app.use(cors({
+    "origin":"*"
+}))
 app.use(bodyParser.json());
 
 //db reuire

@@ -1,4 +1,3 @@
-
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
@@ -20,11 +19,11 @@ const signup = async (req, res) => {
         .json({ error: "User already exists with this email" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    // const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     const newUser = await User.create({
       email,
-      password: hashedPassword,
+      password: password,
     });
 
     res
@@ -50,7 +49,7 @@ const login = async (req, res) => {
       return res.status(401).json({ error: "Invalid email or password" });
     }
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    // const passwordMatch = await bcrypt.compare(password, user.password);
     const token = jwt.sign(
       {
         email: user.email,
@@ -59,7 +58,7 @@ const login = async (req, res) => {
       { expiresIn: "24h" }
     );
 
-    if (!passwordMatch) {
+    if (!password) {
       return res.status(401).json({ error: "Invalid email or password" });
     }
 
